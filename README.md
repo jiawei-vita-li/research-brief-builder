@@ -4,30 +4,33 @@
 
 | | |
 |---|---|
-| **Live demo** | [5-min Vercel setup](docs/VERCEL_ONE_CLICK.md) → paste URL below (Simulate works without API key) |
-| **Try in 30s** | **Simulate workflow** → skim tabs → **Export Markdown** (no API key) |
-| **For interviewers** | [docs/INTERVIEW.md](docs/INTERVIEW.md) · [Product brief](docs/PRODUCT_BRIEF.md) |
 | **Repo** | https://github.com/jiawei-vita-li/research-brief-builder |
-
-```text
-Live demo: https://research-brief-builder.vercel.app
-```
-↑ Replace after Vercel deploy (Dashboard import → env vars → redeploy). **Simulate** works without a key.
+| **Try in 30s** | Clone → `npm run dev` → **Simulate workflow** (no API key) |
+| **For interviewers** | [docs/INTERVIEW.md](docs/INTERVIEW.md) · [Product brief](docs/PRODUCT_BRIEF.md) |
+| **Deploy (optional)** | [docs/VERCEL_ONE_CLICK.md](docs/VERCEL_ONE_CLICK.md) |
 
 ---
 
-## Demo
+## Demo (screenshots)
 
-| Step | Screenshot |
-|------|------------|
-| Simulate + stepper | ![Simulate workflow](docs/assets/01-simulate.png) |
-| Paper card + grounding | ![Paper Cards](docs/assets/02-paper-card.png) |
-| Research map | ![Research Map](docs/assets/03-research-map.png) |
-| Export | ![Export Markdown](docs/assets/04-export.png) |
+**Simulate workflow** fills mock paper cards, research map, fit analysis, and email — no OpenAI key required.
+
+<p align="center">
+  <img src="docs/assets/01-simulate.png" alt="Simulate workflow — home and stepper" width="800" />
+</p>
+
+| | |
+|---|---|
+| Paper cards (structured, editable) | Research map (themes + confidence) |
+| <img src="docs/assets/02-paper-card.png" alt="Paper Cards tab" width="400" /> | <img src="docs/assets/03-research-map.png" alt="Research Map tab" width="400" /> |
+
+<p align="center">
+  <img src="docs/assets/04-export.png" alt="Export Markdown at 100% workflow" width="800" />
+</p>
 
 <!-- Optional GIF: ![Demo](docs/assets/demo.gif) -->
 
-If images are missing, run `npm run dev` → http://localhost:3000 → **Simulate workflow** (see [docs/assets/README.md](docs/assets/README.md)).
+Record your own frames: [docs/assets/README.md](docs/assets/README.md) · [docs/DEMO_RECORDING.md](docs/DEMO_RECORDING.md)
 
 ---
 
@@ -85,7 +88,7 @@ cp .env.example .env.local
 npm run dev
 ```
 
-Open http://localhost:3000
+Open http://localhost:3000 → click **Simulate workflow / 模拟全流程**.
 
 ---
 
@@ -123,9 +126,9 @@ UI copy: `English / 中文` in [`lib/i18n/strings.ts`](lib/i18n/strings.ts) ([`z
 
 | | |
 |---|---|
-| **线上演示** | 见 [DEPLOYMENT.md](docs/DEPLOYMENT.md)，部署后替换上方Live demo链接 |
-| **30秒体验** | **模拟全流程** → 浏览各页 → **导出Markdown**（无需APIKey） |
+| **30秒体验** | `npm run dev` → **模拟全流程**（无需APIKey） |
 | **面试官** | [INTERVIEW.md](docs/INTERVIEW.md) |
+| **可选部署** | [DEPLOYMENT.md](docs/DEPLOYMENT.md) |
 
 **面试一句话：** *按步骤产出、能核对引文、能改能导出，不是聊天套壳。*
 
