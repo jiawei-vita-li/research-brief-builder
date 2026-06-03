@@ -1,0 +1,92 @@
+---
+description: Project rules for Research Brief Builder
+alwaysApply: true
+---
+
+# Research Brief Builder Rules
+
+> **Language / 语言:** Each major section has **English** then **中文** (or inline `EN / 中文` for short items).
+
+---
+
+## English
+
+This project is an AI-native workflow app for paper reading and RA outreach.
+
+Always follow these principles:
+
+1. This is not a chatbot.
+   Build visible workflow steps and structured editable outputs.
+
+2. Prioritize MVP clarity over feature breadth.
+   Do not add scraping, authentication, payment, or complex backend unless explicitly requested.
+
+3. Use Next.js App Router, TypeScript, and Tailwind.
+
+4. Keep components small and readable.
+
+5. Use explicit TypeScript types or schemas for all AI outputs.
+
+6. All generated content should be editable by the user.
+
+7. Always include empty, loading, and error states for AI workflow steps.
+
+8. Do not hallucinate paper metadata.
+   If metadata is missing, use "unknown".
+
+9. Before coding, check:
+   - docs/USER_CONTEXT.md
+   - docs/PRODUCT_BRIEF.md
+   - docs/MVP_SPEC.md (Phases 1–6 implemented)
+   - docs/DEPLOYMENT.md
+
+10. LLM steps are user-triggered only (never auto-run after PDF upload).
+    Export is client-side Markdown; do not add email sending.
+
+11. After each implementation task, summarize:
+   - files changed,
+   - what works,
+   - what remains,
+   - any tradeoffs.
+
+---
+
+## 中文
+
+本项目是面向论文阅读与 RA 外联的 AI 原生工作流应用。
+
+始终遵循以下原则：
+
+1. 这不是聊天机器人。
+   构建可见的工作流步骤与结构化、可编辑的输出。
+
+2. MVP 清晰度优先于功能广度。
+   除非明确要求，勿添加爬取、认证、支付或复杂后端。
+
+3. 使用 Next.js App Router、TypeScript 与 Tailwind。
+
+4. 保持组件小而可读。
+
+5. 所有 AI 输出使用显式 TypeScript 类型或 schema。
+
+6. 所有生成内容应可由用户编辑。
+
+7. AI 工作流步骤须始终包含 empty / loading / error 状态。
+
+8. 勿幻觉论文元数据。
+   元数据缺失时使用 `"unknown"`。
+
+9. 编码前查阅：
+   - docs/USER_CONTEXT.md
+   - docs/PRODUCT_BRIEF.md
+   - docs/MVP_SPEC.md（阶段 1–6 已实现）
+   - docs/DEPLOYMENT.md
+
+10. LLM 步骤仅由用户触发（PDF 上传后永不自动运行）。
+    导出为客户端 Markdown；勿添加邮件发送功能。
+
+11. 每次实现任务后，总结：
+   - 变更文件，
+   - 已可用功能，
+   - 剩余工作，
+   - 任何权衡。
