@@ -44,7 +44,7 @@ function quoteVerificationLabel(
 ): string {
   if (!quote.trim()) return bi("Not checked", "未核对");
   if (!result) return bi("Not checked", "未核对");
-  return result.isGrounded ? bi("Verified", "已核对") : bi("Needs review", "待审阅");
+  return result.isGrounded ? bi("Verified", "已对上") : bi("Needs review", "待核对");
 }
 
 function blockquoteLines(text: string): string {
@@ -63,7 +63,7 @@ function sectionPaperCards(
   groundingResults?: Record<string, GroundingResult[]>
 ): string {
   if (paperCards.length === 0) {
-    return mdH2("Paper Cards", "论文卡片") + "_Not generated. / 未生成._\n\n";
+    return mdH2("Paper Cards", "论文卡片") + "_Not generated. / 尚未生成._\n\n";
   }
 
   const parts: string[] = [mdH2("Paper Cards", "论文卡片")];
@@ -115,10 +115,10 @@ function sectionPaperCards(
 
 function sectionResearchMap(map: ResearchMap | null | undefined): string {
   if (!map) {
-    return mdH2("Research Map", "研究图谱") + "_Not generated. / 未生成._\n\n";
+    return mdH2("Research Map", "研究地图") + "_Not generated. / 尚未生成._\n\n";
   }
 
-  const lines: string[] = [mdH2("Research Map", "研究图谱")];
+  const lines: string[] = [mdH2("Research Map", "研究地图")];
 
   lines.push("### Main research themes\n");
   if (map.main_research_themes.length === 0) {
@@ -181,10 +181,10 @@ function sectionResearchMap(map: ResearchMap | null | undefined): string {
 
 function sectionFitAnalysis(fit: FitAnalysis | null | undefined): string {
   if (!fit) {
-    return mdH2("Fit Analysis", "匹配分析") + "_Not generated. / 未生成._\n\n";
+    return mdH2("Fit Analysis", "契合度") + "_Not generated. / 尚未生成._\n\n";
   }
 
-  const lines: string[] = [mdH2("Fit Analysis", "匹配分析")];
+  const lines: string[] = [mdH2("Fit Analysis", "契合度")];
 
   lines.push("### Strongest match points\n");
   if (fit.strongest_match_points.length === 0) {
@@ -228,10 +228,10 @@ function sectionFitAnalysis(fit: FitAnalysis | null | undefined): string {
 
 function sectionOutreachEmail(email: OutreachEmailDraft | null | undefined): string {
   if (!email) {
-    return mdH2("Outreach Email Draft", "外联邮件草稿") + "_Not generated. / 未生成._\n\n";
+    return mdH2("Outreach Email Draft", "套磁邮件草稿") + "_Not generated. / 尚未生成._\n\n";
   }
 
-  const lines: string[] = [mdH2("Outreach Email Draft", "外联邮件草稿")];
+  const lines: string[] = [mdH2("Outreach Email Draft", "套磁邮件草稿")];
 
   lines.push(`**Subject:** ${escapeInline(email.subject)}\n`);
 
@@ -261,12 +261,12 @@ function sectionOutreachEmail(email: OutreachEmailDraft | null | undefined): str
 }
 
 function sectionReviewChecklist(): string {
-  return `${mdH2("Review Checklist", "审阅清单")}- [ ] ${bi("Verify paper titles and metadata", "核对论文标题与元数据")}
-- [ ] ${bi("Review unverified evidence quotes", "审阅未核对的证据引用")}
-- [ ] ${bi("Confirm the email does not overstate fit", "确认邮件未夸大匹配度")}
-- [ ] ${bi("Customize professor name and greeting", "填写导师姓名与称呼")}
-- [ ] ${bi("Add real availability before sending", "填写真实可联系时间再发送")}
-- [ ] ${bi("Review tone before sending", "发送前审阅语气")}
+  return `${mdH2("Review Checklist", "发信前自查")}- [ ] ${bi("Verify paper titles and metadata", "论文标题和元数据对不对")}
+- [ ] ${bi("Review unverified evidence quotes", "没对上的引用逐条看过")}
+- [ ] ${bi("Confirm the email does not overstate fit", "邮件有没有把契合度吹过头")}
+- [ ] ${bi("Customize professor name and greeting", "教授姓名和称呼改对了")}
+- [ ] ${bi("Add real availability before sending", "可联系时间写的是真的")}
+- [ ] ${bi("Review tone before sending", "语气再过一遍")}
 
 `;
 }
@@ -279,16 +279,16 @@ export function buildResearchBriefMarkdown(
 
   const sections = [
     "# Research Brief / 研究简报\n",
-    `${bi("Generated at", "生成时间")}: ${formatGeneratedAt(generatedAt)}\n`,
-    mdH2("User Background", "用户背景"),
-    bg ? `${escapeInline(bg)}\n` : "_Not provided. / 未提供._\n",
+    `${bi("Generated at", "生成于")}: ${formatGeneratedAt(generatedAt)}\n`,
+    mdH2("User Background", "个人背景"),
+    bg ? `${escapeInline(bg)}\n` : "_Not provided. / 未填写._\n",
     "",
     sectionPaperCards(input.paperCards, input.groundingResults),
     sectionResearchMap(input.researchMap),
     sectionFitAnalysis(input.fitAnalysis),
     sectionOutreachEmail(input.outreachEmailDraft),
     sectionReviewChecklist(),
-    "_Exported from Research Brief Builder / 由 Research Brief Builder 导出。Draft for human review — not auto-sent. / 供人工审阅的草稿，不会自动发送。_\n",
+    "_Exported from Research Brief Builder / 由Research Brief Builder导出。Draft for human review — not auto-sent. / 草稿，发信前你自己定稿，系统不会替你发送。_\n",
   ];
 
   return sections.join("\n").replace(/\n{3,}/g, "\n\n").trim() + "\n";

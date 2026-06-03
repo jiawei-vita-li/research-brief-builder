@@ -2,7 +2,7 @@
 
 **Repository / 仓库:** https://github.com/jiawei-vita-li/research-brief-builder
 
-> **Language / 语言:** Each major section has **English** then **中文** (or inline `EN / 中文` for short items).
+> **Language / 语言:** Each major section has **English** then **中文** (or inline `EN / 中文` for short items). **中文排版（zhNormalize）：** 保留的英文与数字前后不加空格（如：导出Markdown、至少80字、Phase1–6）。
 
 ---
 
@@ -14,7 +14,7 @@ AI-native workflow for graduate RA outreach: structured paper cards, research ma
 
 ### UI copy convention
 
-In-app labels and messages use the **`English / 中文`** pattern, centralized in [`lib/i18n/strings.ts`](lib/i18n/strings.ts). Documentation follows the same bilingual style; code blocks, env vars, and API routes stay unchanged.
+In-app labels use **`English / 中文`**, centralized in [`lib/i18n/strings.ts`](lib/i18n/strings.ts) with [`zhNormalize`](lib/i18n/bi.ts) (no spaces around Latin letters/digits in Chinese). Documentation follows the same bilingual style; code blocks, env vars, and API routes stay unchanged.
 
 ### Demo
 
@@ -71,26 +71,26 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## 中文
 
-面向研究生 RA 外联的 AI 原生工作流：结构化论文卡片、研究地图、匹配分析与外联邮件草稿——含来源溯源与 Markdown 导出。
+帮研究生做RA套磁的一套AI工作流：论文卡片、研究地图、匹配分析、邮件草稿都按结构来，引文能对照原文核对，最后可导出Markdown。
 
-**文档：** [产品简介](docs/PRODUCT_BRIEF.md) · [MVP 规格](docs/MVP_SPEC.md) · [部署到 Vercel](docs/DEPLOYMENT.md) · [录制演示 GIF](docs/DEMO_RECORDING.md)
+**文档：** [产品简介](docs/PRODUCT_BRIEF.md) · [MVP规格](docs/MVP_SPEC.md) · [部署到Vercel](docs/DEPLOYMENT.md) · [录制演示GIF](docs/DEMO_RECORDING.md)
 
 ### 界面文案约定
 
-应用内标签与提示采用 **`English / 中文`** 格式，集中在 [`lib/i18n/strings.ts`](lib/i18n/strings.ts)。本文档采用相同双语风格；代码块、环境变量名与 API 路由保持不变。
+应用里标签和提示统一用 **`English / 中文`**，文案集中在 [`lib/i18n/strings.ts`](lib/i18n/strings.ts)，中文里的英文和数字前后不留空格（见 [`zhNormalize`](lib/i18n/bi.ts)）。文档同样双语；代码块、环境变量名、API路由不改。
 
 ### 演示
 
 <!-- 录制完成后，取消注释并添加 docs/assets/demo.gif -->
 <!-- ![Simulate workflow → Export Markdown](docs/assets/demo.gif) -->
 
-**快速演示（无需 API Key）：** **Simulate workflow / 模拟工作流** → 浏览各标签页 → **Export Markdown / 导出 Markdown** 或 **Copy to clipboard / 复制到剪贴板**。
+**快速演示（不用APIKey）：** **Simulate workflow / 模拟工作流** → 点一圈各标签页 → **Export Markdown / 导出Markdown** 或 **Copy to clipboard / 复制到剪贴板**。
 
 ### 线上部署（Vercel）
 
-1. 分步说明见 **[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)**。
-2. 在 Vercel → Environment Variables 中设置 `OPENAI_API_KEY`（及可选的 `OPENAI_MODEL`）。
-3. 添加密钥后重新部署。
+1. 一步步怎么做，看 **[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)**。
+2. 在Vercel → Environment Variables里填 `OPENAI_API_KEY`（可选 `OPENAI_MODEL`）。
+3. 密钥加好后重新部署一次。
 
 ```text
 Live demo: https://YOUR_PROJECT.vercel.app   ← 部署后替换
@@ -108,17 +108,17 @@ npm run dev
 
 打开 [http://localhost:3000](http://localhost:3000)。
 
-### MVP 功能（阶段 1–6）
+### MVP功能（Phase1–6）
 
 | 阶段 | 功能 |
 |------|------|
-| 1 | 模拟 UI + **Simulate workflow / 模拟工作流** |
+| 1 | 模拟UI + **Simulate workflow / 模拟工作流** |
 | 2 | **Generate Paper Card / 生成论文卡片**（粘贴文本 + LLM） |
-| 2.5 | 用户背景 + 引文 **source grounding / 来源溯源** |
-| 3 | **PDF upload / PDF 上传** → 客户端文本提取（LLM 前先审阅） |
+| 2.5 | 用户背景 + 引文 **source grounding / 对照原文** |
+| 3 | **PDF upload / PDF上传** → 客户端抽文本（调LLM前先自己过一遍） |
 | 4 | **Synthesize Research Map / 合成研究地图** |
 | 5 | **Generate Fit & Email / 生成匹配与邮件** |
-| 6 | **Export Markdown / 导出 Markdown** + **Copy to clipboard / 复制到剪贴板** |
+| 6 | **Export Markdown / 导出Markdown** + **Copy to clipboard / 复制到剪贴板** |
 
 ### 脚本
 
@@ -126,6 +126,6 @@ npm run dev
 - `npm run build` — 生产构建
 - `npm run lint` — ESLint
 
-### 面试一句话 pitch
+### 面试一句话pitch
 
-*结构化、可核验的 RA 外联工作流，步骤可见、人机协同产出中间产物——而非通用论文摘要器或聊天套壳。*
+*RA套磁按步骤走、中间结果能改能核对，不是「一键摘要」，也不是把ChatGPT包一层壳。*

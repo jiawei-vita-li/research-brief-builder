@@ -1,6 +1,6 @@
 # 30-Second Demo GIF (Simulate → Export)
 
-> **Language / 语言:** Each major section has **English** then **中文** (or inline `EN / 中文` for short items).
+> **Language / 语言:** Each major section has **English** then **中文** (or inline `EN / 中文` for short items). **中文排版（zhNormalize）：** 保留的英文与数字前后不加空格（如：导出Markdown、至少80字、Phase1–6）。
 
 ---
 
@@ -56,38 +56,38 @@ ffmpeg -i demo.mov -vf "fps=15,scale=1280:-1:flags=lanczos" -loop 0 docs/assets/
 
 ## 中文
 
-在本地或 Vercel 上运行应用后录制。目标时长：**25–35 秒**，分辨率 **1280×720** 或 **1920×1080**，15–20 FPS。
+本地或Vercel跑起来之后再录。建议 **25–35秒**，分辨率 **1280×720** 或 **1920×1080**，15–20 FPS。
 
 ### 分镜脚本
 
 | 秒 | 操作 | 旁白（可选） |
 |----|------|--------------|
-| 0–3 | 应用已加载，指向步骤条 + 标语 | 「面向 RA 外联的 AI 原生工作流——不是聊天机器人。」 |
-| 3–10 | 点击 **Simulate workflow / 模拟工作流**，等待完成 | 「六步可见；结构化产物，而非一大段文字。」 |
-| 10–14 | 标签页 **Paper Cards / 论文卡片** — 滚动一张卡片 | 「带字段与证据的论文卡片。」 |
-| 14–17 | 标签页 **Research Map / 研究地图** — 主题 + 置信度 | 「跨论文的教授级地图。」 |
-| 17–20 | 标签页 **Fit Analysis / 匹配分析** — 定位 | 「写邮件前先匹配。」 |
-| 20–23 | 标签页 **Outreach Email / 外联邮件** — 草稿徽章 | 「可编辑草稿——非自动发送。」 |
-| 23–30 | **Export Markdown / 导出 Markdown**（或 Copy）— 展示下载/toast | 「供最终人工审阅的便携 Markdown。」 |
+| 0–3 | 页面打开，指一下步骤条和标语 | 「RA套磁用的分步工作流，不是聊天机器人。」 |
+| 3–10 | 点 **Simulate workflow / 模拟工作流**，等跑完 | 「六步都看得见；每步是结构化块，不是一大坨字。」 |
+| 10–14 | **Paper Cards / 论文卡片** — 滚一张卡片 | 「字段拆开，下面还有证据引文。」 |
+| 14–17 | **Research Map / 研究地图** — 看主题和置信度 | 「多篇论文合在一起，像教授研究方向地图。」 |
+| 17–20 | **Fit Analysis / 匹配分析** — 看定位 | 「写邮件前先想清楚怎么接。」 |
+| 20–23 | **Outreach Email / 套磁邮件** — 看草稿徽章 | 「能改，只是草稿，不会帮你发。」 |
+| 23–30 | **Export Markdown / 导出Markdown**（或Copy）— 露出下载或toast | 「导出Markdown，最后你自己定稿。」 |
 
 ### Windows — ScreenToGif（免费）
 
-1. 安装 [ScreenToGif](https://www.screentosoft.com/)。  
-2. **Recorder / 录制器** → 框选浏览器窗口区域。  
-3. 按上方分镜执行。  
-4. **Edit / 编辑** → 裁剪停顿 → **File → Save as / 另存为** → GIF。  
-5. 保存至 `docs/assets/demo.gif`（需创建文件夹）。  
+1. 装 [ScreenToGif](https://www.screentosoft.com/)。  
+2. **Recorder / 录制器** → 框住浏览器窗口。  
+3. 按上面分镜录一遍。  
+4. **Edit / 编辑** → 剪掉发呆的停顿 → **File → Save as / 另存为** → GIF。  
+5. 存到 `docs/assets/demo.gif`（没有文件夹就先建）。  
 
 ### macOS — QuickTime + 转换
 
-1. QuickTime → New Screen Recording / 新建屏幕录制 → 按分镜录制。  
-2. 用 [gifski](https://gif.ski/) 或 FFmpeg 转为 GIF：
+1. QuickTime → New Screen Recording / 新建屏幕录制 → 按分镜录。  
+2. 用 [gifski](https://gif.ski/) 或FFmpeg转成GIF：
 
 ```bash
 ffmpeg -i demo.mov -vf "fps=15,scale=1280:-1:flags=lanczos" -loop 0 docs/assets/demo.gif
 ```
 
-### 嵌入 README
+### 嵌进README
 
 ```markdown
 ## Demo
@@ -95,9 +95,9 @@ ffmpeg -i demo.mov -vf "fps=15,scale=1280:-1:flags=lanczos" -loop 0 docs/assets/
 ![Simulate workflow → Export Markdown](./docs/assets/demo.gif)
 ```
 
-### 提示
+### 小贴士
 
-- 隐藏书签栏；使用浅色主题以提高可读性。  
-- 笔记本上 UI 偏小时，浏览器缩放至 110%。  
-- **切勿** 在画面中暴露 API Key 或 `.env.local`。  
-- Simulate 路径 **无需** OpenAI Key——适合公开 GIF。  
+- 书签栏藏起来；浅色主题录出来更清楚。  
+- 笔记本上字太小就把浏览器缩放到110%。  
+- 画面里**别**出现APIKey或.env.local。  
+- 走Simulate这条路**不用**OpenAI Key，适合公开GIF。  

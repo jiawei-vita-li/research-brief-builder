@@ -14,7 +14,6 @@ import type {
   SuggestedReading,
   ThemeConfidence,
 } from "@/lib/types";
-import { bi } from "@/lib/i18n/bi";
 import { STR } from "@/lib/i18n/strings";
 import { AlertTriangle } from "lucide-react";
 
@@ -64,7 +63,7 @@ function ThemeEditor({
   return (
     <Card className="shadow-none border-dashed">
       <CardHeader className="py-3 px-4 flex flex-row items-center justify-between gap-2">
-        <CardTitle className="text-sm">Theme {index + 1}</CardTitle>
+        <CardTitle className="text-sm">{STR.researchMap.themeN(index + 1)}</CardTitle>
         <div className="flex items-center gap-2">
           <select
             value={theme.confidence}
@@ -86,29 +85,29 @@ function ThemeEditor({
             onClick={onRemove}
             className="text-xs text-muted-foreground hover:text-foreground"
           >
-            Remove
+            {STR.researchMap.remove}
           </button>
         </div>
       </CardHeader>
       <CardContent className="space-y-3 px-4 pb-4 pt-0">
         <EditableField
-          label="Theme"
+          label={STR.researchMap.theme}
           value={theme.theme}
           onChange={(v) => onChange({ ...theme, theme: v })}
           rows={1}
         />
         <EditableField
-          label="Description"
+          label={STR.researchMap.description}
           value={theme.description}
           onChange={(v) => onChange({ ...theme, description: v })}
           rows={3}
         />
         <div className="space-y-1.5">
-          <Label>Supporting papers (source)</Label>
+          <Label>{STR.researchMap.supportingPapers}</Label>
           <SupportingPaperBadges papers={theme.supporting_papers} />
         </div>
         <EditableListField
-          label="Edit supporting paper titles"
+          label={STR.researchMap.editSupporting}
           items={theme.supporting_papers}
           onChange={(supporting_papers) => onChange({ ...theme, supporting_papers })}
           rows={2}
@@ -133,34 +132,34 @@ function MethodEditor({
   return (
     <Card className="shadow-none border-dashed">
       <CardHeader className="py-3 px-4 flex flex-row items-center justify-between">
-        <CardTitle className="text-sm">Method {index + 1}</CardTitle>
+        <CardTitle className="text-sm">{STR.researchMap.methodN(index + 1)}</CardTitle>
         <button
           type="button"
           onClick={onRemove}
           className="text-xs text-muted-foreground hover:text-foreground"
         >
-          Remove
+          {STR.researchMap.remove}
         </button>
       </CardHeader>
       <CardContent className="space-y-3 px-4 pb-4 pt-0">
         <EditableField
-          label="Method"
+          label={STR.researchMap.method}
           value={method.method}
           onChange={(v) => onChange({ ...method, method: v })}
           rows={1}
         />
         <EditableField
-          label="Description"
+          label={STR.researchMap.description}
           value={method.description}
           onChange={(v) => onChange({ ...method, description: v })}
           rows={2}
         />
         <div className="space-y-1.5">
-          <Label>Supporting papers (source)</Label>
+          <Label>{STR.researchMap.supportingPapers}</Label>
           <SupportingPaperBadges papers={method.supporting_papers} />
         </div>
         <EditableListField
-          label="Edit supporting paper titles"
+          label={STR.researchMap.editSupporting}
           items={method.supporting_papers}
           onChange={(supporting_papers) => onChange({ ...method, supporting_papers })}
           rows={2}
@@ -181,15 +180,15 @@ function RepresentativeEditor({
 }) {
   return (
     <div className="space-y-2 rounded-md border p-3">
-      <p className="text-xs font-medium text-muted-foreground">Paper {index + 1}</p>
+      <p className="text-xs font-medium text-muted-foreground">{STR.researchMap.paperN(index + 1)}</p>
       <EditableField
-        label="Title"
+        label={STR.researchMap.title}
         value={paper.title}
         onChange={(title) => onChange({ ...paper, title })}
         rows={1}
       />
       <EditableField
-        label="Why representative"
+        label={STR.researchMap.whyRepresentative}
         value={paper.why_representative}
         onChange={(why_representative) => onChange({ ...paper, why_representative })}
         rows={2}
@@ -211,13 +210,13 @@ function ReadingOrderEditor({
     <div className="space-y-2 rounded-md border p-3">
       <p className="text-xs font-medium text-muted-foreground">#{index + 1}</p>
       <EditableField
-        label="Title"
+        label={STR.researchMap.title}
         value={item.title}
         onChange={(title) => onChange({ ...item, title })}
         rows={1}
       />
       <EditableField
-        label="Reason"
+        label={STR.researchMap.reason}
         value={item.reason}
         onChange={(reason) => onChange({ ...item, reason })}
         rows={2}
@@ -248,14 +247,12 @@ export function ResearchMapView({
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">{bi("Professor research map", "导师研究图谱")}</CardTitle>
-          <p className="text-xs text-muted-foreground">
-            Synthesized from paper cards · human-in-the-loop review
-          </p>
+          <CardTitle className="text-base">{STR.researchMap.cardTitle}</CardTitle>
+          <p className="text-xs text-muted-foreground">{STR.researchMap.cardSubtitle}</p>
         </CardHeader>
         <CardContent className="space-y-6">
           <section className="space-y-3">
-            <Label>Main research themes</Label>
+            <Label>{STR.researchMap.mainThemes}</Label>
             {map.main_research_themes.map((theme, i) => (
               <ThemeEditor
                 key={`theme-${i}`}
@@ -292,14 +289,14 @@ export function ResearchMapView({
                 })
               }
             >
-              + Add theme
+              + {STR.researchMap.addTheme}
             </button>
           </section>
 
           <Separator />
 
           <section className="space-y-3">
-            <Label>Recurring methods</Label>
+            <Label>{STR.researchMap.recurringMethods}</Label>
             {map.recurring_methods.map((method, i) => (
               <MethodEditor
                 key={`method-${i}`}
@@ -331,14 +328,14 @@ export function ResearchMapView({
                 })
               }
             >
-              + Add method
+              + {STR.researchMap.addMethod}
             </button>
           </section>
 
           <Separator />
 
           <section className="space-y-3">
-            <Label>Representative papers</Label>
+            <Label>{STR.researchMap.representativePapers}</Label>
             {map.representative_papers.map((paper, i) => (
               <RepresentativeEditor
                 key={`rep-${i}`}
@@ -354,31 +351,31 @@ export function ResearchMapView({
           </section>
 
           <EditableListField
-            label="Evolution over time"
+            label={STR.researchMap.evolution}
             items={map.evolution_over_time}
             onChange={(evolution_over_time) => patch({ evolution_over_time })}
             rows={4}
           />
           <EditableListField
-            label="Open questions"
+            label={STR.researchMap.openQuestions}
             items={map.open_questions}
             onChange={(open_questions) => patch({ open_questions })}
           />
           <EditableListField
-            label="Possible RA entry points"
+            label={STR.researchMap.raEntry}
             items={map.possible_RA_entry_points}
             onChange={(possible_RA_entry_points) =>
               patch({ possible_RA_entry_points })
             }
           />
           <EditableListField
-            label="Risks or gaps"
+            label={STR.researchMap.risksGaps}
             items={map.risks_or_gaps}
             onChange={(risks_or_gaps) => patch({ risks_or_gaps })}
           />
 
           <section className="space-y-3">
-            <Label>Suggested reading order</Label>
+            <Label>{STR.researchMap.readingOrder}</Label>
             {map.suggested_reading_order.map((item, i) => (
               <ReadingOrderEditor
                 key={`read-${i}`}

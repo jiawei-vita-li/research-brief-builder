@@ -1,6 +1,6 @@
 # MVP Spec (Implemented)
 
-> **Language / 语言:** Each major section has **English** then **中文** (or inline `EN / 中文` for short items).
+> **Language / 语言:** Each major section has **English** then **中文** (or inline `EN / 中文` for short items). **中文排版（zhNormalize）：** 保留的英文与数字前后不加空格（如：导出Markdown、至少80字、Phase1–6）。
 
 ---
 
@@ -196,7 +196,7 @@ components/home-page.tsx
 
 ## 中文
 
-状态：**阶段 1–6 已完成**（本地 Web 应用，客户端优先，OpenAI 仅通过服务端路由）。
+状态：**Phase1–6 已完成**（本地Web应用，偏客户端，OpenAI只走服务端路由）。
 
 ### 技术栈
 
@@ -205,12 +205,12 @@ components/home-page.tsx
 | 框架 | Next.js 16 App Router |
 | 语言 | TypeScript |
 | 样式 | Tailwind CSS + shadcn/ui（最小集合） |
-| 状态 | React 本地状态（无数据库） |
-| LLM | OpenAI API（默认 `gpt-4o-mini`）经 Route Handlers |
+| 状态 | React本地状态（无数据库） |
+| LLM | OpenAI API（默认 `gpt-4o-mini`）经Route Handlers |
 | PDF | `pdfjs-dist`（客户端提取） |
-| 导出 | 客户端 Markdown 构建 + 下载 / 剪贴板 |
+| 导出 | 客户端拼Markdown + 下载/剪贴板 |
 
-依赖保持最小：无认证、无向量库、无邮件 SDK。
+依赖尽量瘦：无登录、无向量库、无邮件SDK。
 
 ### 架构
 
@@ -225,27 +225,27 @@ Next.js Route Handlers
   └── OpenAI structured output (Zod validate)
 ```
 
-无服务端文件存储。PDF 从不上传至服务器。
+服务端不存文件。PDF不会上传到服务器。
 
 ### 布局
 
 1. **Header / 页头** — Research Brief Builder + 标语  
-2. **Toolbar / 工具栏** — Simulate workflow + 阶段提示  
-3. **Workflow stepper / 工作流步骤条** — Upload/Paste → Parse → Analyze → Synthesize → Draft → Export  
-4. **Left panel / 左侧面板** — PDF 上传、粘贴文本、用户背景、Generate Paper Card  
-5. **Main tabs / 主标签页** — Paper Cards | Research Map | Fit Analysis | Outreach Email  
-6. **Right panel (Status) / 右侧面板（状态）** — 进度、消息、Export Markdown、Copy to clipboard、演示控件  
+2. **Toolbar / 工具栏** — Simulate workflow + 当前阶段提示  
+3. **Workflow stepper / 步骤条** — Upload/Paste → Parse → Analyze → Synthesize → Draft → Export  
+4. **Left panel / 左侧** — PDF上传、粘贴文本、用户背景、Generate Paper Card  
+5. **Main tabs / 主区** — Paper Cards | Research Map | Fit Analysis | Outreach Email  
+6. **Right panel (Status) / 右侧状态** — 进度、消息、Export Markdown、Copy to clipboard、演示控件  
 
-### 用户触发的操作（非自动）
+### 用户触发的操作（不会自动跑）
 
 | 操作 | 触发条件 | API |
 |------|----------|-----|
-| Generate Paper Card / 生成论文卡片 | 按钮（粘贴 ≥100 字符） | `POST /api/paper-card` |
-| Synthesize Research Map / 合成研究地图 | 按钮（≥1 张论文卡片） | `POST /api/research-map` |
-| Generate Fit & Email / 生成匹配与邮件 | 按钮（卡片 + 地图 + 背景 ≥80） | `POST /api/fit-email` |
-| Export / Copy Markdown / 导出 / 复制 Markdown | 按钮（≥1 个产物） | 仅客户端 |
+| Generate Paper Card / 生成论文卡片 | 按钮（粘贴≥100字） | `POST /api/paper-card` |
+| Synthesize Research Map / 合成研究地图 | 按钮（≥1张论文卡片） | `POST /api/research-map` |
+| Generate Fit & Email / 生成匹配与邮件 | 按钮（卡片+地图+背景≥80字） | `POST /api/fit-email` |
+| Export / Copy Markdown / 导出/复制Markdown | 按钮（至少有一份输出） | 仅客户端 |
 
-PDF 上传 **仅填充** 粘贴区 — **不会** 调用 LLM。
+PDF上传**只填**粘贴区 — **不会**自动调LLM。
 
 ### 核心数据对象
 
@@ -253,13 +253,13 @@ PDF 上传 **仅填充** 粘贴区 — **不会** 调用 LLM。
 
 | 字段 | 说明 |
 |------|------|
-| id, title, authors, year, venue | 缺失时为 `unknown` |
+| id, title, authors, year, venue | 缺了就用 `unknown` |
 | problem, motivation, method, pipeline | 文本 |
 | key_contributions | string[] |
 | limitations, useful_for_my_research | 文本 |
-| evidence_quotes | string[]；客户端对照粘贴文本溯源 |
+| evidence_quotes | string[]；客户端对照粘贴文本做grounding |
 
-#### ResearchMap（阶段 4 schema）
+#### ResearchMap（Phase4 schema）
 
 | 字段 | 结构 |
 |------|------|
@@ -270,7 +270,7 @@ PDF 上传 **仅填充** 粘贴区 — **不会** 调用 LLM。
 | open_questions, possible_RA_entry_points, risks_or_gaps | string[] |
 | suggested_reading_order | `{ title, reason }[]` |
 
-#### FitAnalysis（阶段 5 schema）
+#### FitAnalysis（Phase5 schema）
 
 | 字段 | 结构 |
 |------|------|
@@ -280,94 +280,94 @@ PDF 上传 **仅填充** 粘贴区 — **不会** 调用 LLM。
 | suggested_positioning, recommended_outreach_angle | string |
 | questions_to_ask_professor | string[] |
 
-#### OutreachEmailDraft（阶段 5 schema）
+#### OutreachEmailDraft（Phase5 schema）
 
 | 字段 | 说明 |
 |------|------|
 | subject, greeting, opening | |
 | paper_specific_paragraph, self_positioning_paragraph | |
 | proposed_RA_contribution, availability_or_next_step, closing | |
-| full_email | 完整草稿（单块） |
+| full_email | 整封草稿（一块文本） |
 
-### UX 要求（已落实）
+### UX要求（已落实）
 
-- 可见工作流步骤；**非** 聊天机器人 UI  
-- 所有 LLM 输出 **可就地编辑**  
-- 各标签页 relevant 的 **empty / loading / error** 状态  
-- 缺失论文元数据 → **`unknown`**（UI 中 muted 徽章）  
-- 证据引文 → **Verified / 已验证** / **Needs review / 待审阅**（来源溯源）  
-- 邮件 **仅草稿** — 永不自动发送  
+- 工作流步骤看得见；**不是**聊天界面  
+- LLM输出**当场能改**  
+- 各标签页该有的 **empty / loading / error** 都要有  
+- 论文元数据缺了 → **`unknown`**（UI里灰色徽章）  
+- 证据引文 → **Verified / 已验证** / **Needs review / 待核对**（对照原文）  
+- 邮件**只是草稿** — 不会自动发  
 
 ### 阶段摘要（已交付）
 
-#### 阶段 1 — Mock UI ✅
+#### Phase1 — Mock UI ✅
 
-- 完整布局，simulate workflow（模拟加载 → mock 产物）  
-- 可编辑卡片、步骤条、四个标签页  
+- 完整布局，Simulate workflow（假加载 → mock数据）  
+- 卡片可改、步骤条、四个标签页  
 
-#### 阶段 2 — Paper Card（LLM）✅
+#### Phase2 — Paper Card（LLM）✅
 
 - `POST /api/paper-card` `{ paperText, userBackground? }`  
 - Zod schema + 结构化输出  
-- 与 Simulate 分离  
+- 和Simulate分开  
 
-#### 阶段 2.5 — 溯源 + 背景 ✅
+#### Phase2.5 — grounding + 背景 ✅
 
 - `verifyEvidenceQuotes()` — exact / normalized / not_found  
-- API 响应含 `groundingResults`；UI 徽章  
-- `useful_for_my_research` 使用可选用户背景  
+- API返回 `groundingResults`；UI显示徽章  
+- `useful_for_my_research` 会吃可选的用户背景  
 
-#### 阶段 3 — PDF 上传 ✅
+#### Phase3 — PDF上传 ✅
 
-- 客户端 `pdfjs-dist`，最大 15MB  
+- 客户端 `pdfjs-dist`，最大15MB  
 - 分页符 `--- Page N ---`  
-- 填充粘贴区；Generate 前由用户审阅  
+- 填进粘贴区；点Generate前你自己审  
 
-#### 阶段 4 — Research Map ✅
+#### Phase4 — Research Map ✅
 
 - `POST /api/research-map` `{ paperCards, userBackground? }`  
-- 丰富地图 schema；置信度 + 支持论文徽章  
-- &lt;2 张论文卡片时警告  
+- 地图schema较全；置信度 + 支撑论文徽章  
+- 论文卡片&lt;2张时会提示  
 
-#### 阶段 5 — Fit & Email ✅
+#### Phase5 — Fit & Email ✅
 
-- `POST /api/fit-email` `{ paperCards, researchMap, userBackground }`（背景必填，≥80 字符）  
+- `POST /api/fit-email` `{ paperCards, researchMap, userBackground }`（背景必填，≥80字）  
 - 结构化匹配 + 分段邮件 + `full_email`  
-- 真实发送前人机协同  
+- 真发邮件前你自己把关  
 
-#### 阶段 6 — Markdown 导出 ✅
+#### Phase6 — Markdown导出 ✅
 
 - `buildResearchBriefMarkdown()` + 下载 `research-brief-YYYY-MM-DD.md`  
-- 导出含审阅清单  
-- **Copy to clipboard / 复制到剪贴板**（无后端）  
+- 导出里带审阅清单  
+- **Copy to clipboard / 复制到剪贴板**（纯前端）  
 
-### API 环境变量
+### API环境变量
 
 ```env
 OPENAI_API_KEY=sk-...
 OPENAI_MODEL=gpt-4o-mini   # optional
 ```
 
-### 面试演示路径（30 秒，无 API Key）
+### 面试演示（约30秒，不用APIKey）
 
-1. **Simulate workflow / 模拟工作流** — 六步，mock 数据  
-2. 浏览 **Paper Cards** / **Research Map** / **Fit** / **Email** 标签页  
-3. **Export Markdown / 导出 Markdown** 或 **Copy to clipboard / 复制到剪贴板**  
-4. 说明：分阶段产物、溯源、人工审阅、便携交接 — 非聊天套壳  
+1. **Simulate workflow / 模拟工作流** — 六步，mock数据  
+2. 扫一眼 **Paper Cards** / **Research Map** / **Fit** / **Email**  
+3. **Export Markdown / 导出Markdown** 或 **Copy to clipboard / 复制到剪贴板**  
+4. 讲清楚：分步输出、引文核对、你来审、Markdown带走 — 不是聊天套壳  
 
-### 面试演示路径（有 API Key）
+### 面试演示（有APIKey）
 
-1. 粘贴论文文本 → **Generate Paper Card / 生成论文卡片**（展示溯源）  
-2. **Synthesize Research Map / 合成研究地图**（理想情况 2+ 张卡片）  
+1. 粘贴论文 → **Generate Paper Card / 生成论文卡片**（展示grounding）  
+2. **Synthesize Research Map / 合成研究地图**（最好2张卡片以上）  
 3. **Generate Fit & Email / 生成匹配与邮件**  
-4. **Export Markdown / 导出 Markdown**  
+4. **Export Markdown / 导出Markdown**  
 
-### 非目标（仍不在范围内）
+### 非目标（仍不做）
 
-- Google Scholar / 教授主页爬取  
-- 邮件发送、Gmail、认证、支付  
-- 多用户后端、向量库、SQLite 持久化  
-- PDF 导出、服务端 PDF 存储  
+- 爬Google Scholar / 教授主页  
+- 发邮件、Gmail、登录、支付  
+- 多用户后端、向量库、SQLite持久化  
+- 导出PDF、服务端存PDF  
 
 ### 文件地图（关键路径）
 

@@ -91,9 +91,9 @@ export function PaperCardView({
           />
         )}
         <div className="grid gap-3 sm:grid-cols-3">
-          <EditableField label="Authors (edit)" value={card.authors} onChange={(authors) => patch({ authors })} rows={1} />
-          <EditableField label="Year (edit)" value={card.year} onChange={(year) => patch({ year })} rows={1} />
-          <EditableField label="Venue (edit)" value={card.venue} onChange={(venue) => patch({ venue })} rows={1} />
+          <EditableField label={STR.paperCard.authorsEdit} value={card.authors} onChange={(authors) => patch({ authors })} rows={1} />
+          <EditableField label={STR.paperCard.yearEdit} value={card.year} onChange={(year) => patch({ year })} rows={1} />
+          <EditableField label={STR.paperCard.venueEdit} value={card.venue} onChange={(venue) => patch({ venue })} rows={1} />
         </div>
       </CardContent>
     </Card>

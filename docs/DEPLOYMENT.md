@@ -1,6 +1,6 @@
 # Deploy to Vercel
 
-> **Language / 语言:** Each major section has **English** then **中文** (or inline `EN / 中文` for short items).
+> **Language / 语言:** Each major section has **English** then **中文** (or inline `EN / 中文` for short items). **中文排版（zhNormalize）：** 保留的英文与数字前后不加空格（如：导出Markdown、至少80字、Phase1–6）。
 
 ---
 
@@ -93,19 +93,19 @@ Add `docs/assets/demo.gif` after recording (see `DEMO_RECORDING.md`).
 
 ### 前置条件
 
-- [Vercel](https://vercel.com) 账号  
-- GitHub 仓库（推荐）或 Vercel CLI  
-- 已开通计费的 OpenAI API Key  
+- [Vercel](https://vercel.com)账号  
+- GitHub仓库（推荐）或Vercel CLI  
+- 已开通计费的OpenAI APIKey  
 
-### 方案 A — Vercel 控制台（推荐）
+### 方案A — Vercel控制台（推荐）
 
-1. 将 `research-brief-builder` 推送到 GitHub（仓库根目录为本文件夹，或 monorepo 子目录）。
+1. 把 `research-brief-builder` 推到GitHub（仓库根目录就是这个文件夹，或在monorepo子目录里）。
 
 2. 打开 [vercel.com/new](https://vercel.com/new) → Import repository。
 
-3. **Root Directory / 根目录：** 若应用在子文件夹中，设置如 `research-brief-builder`。
+3. **Root Directory / 根目录：** 应用在子文件夹里就填，比如 `research-brief-builder`。
 
-4. **Framework Preset / 框架预设：** Next.js（自动检测）。
+4. **Framework Preset / 框架：** Next.js（一般会自己识别）。
 
 5. **Environment Variables / 环境变量**（Production + Preview）：
 
@@ -114,13 +114,13 @@ Add `docs/assets/demo.gif` after recording (see `DEMO_RECORDING.md`).
    | `OPENAI_API_KEY` | `sk-...` |
    | `OPENAI_MODEL` | `gpt-4o-mini` (optional) |
 
-6. Deploy / 部署 → 复制生产 URL（如 `https://research-brief-builder.vercel.app`）。
+6. Deploy → 记下生产环境URL（例如 `https://research-brief-builder.vercel.app`）。
 
-7. **Verify / 验证**
-   - 打开 URL → **Simulate workflow / 模拟工作流** 无需 API Key 即可运行。  
-   - 粘贴文本 → 配置 Key 后 **Generate Paper Card / 生成论文卡片** 可用。  
+7. **验收**
+   - 打开URL → **Simulate workflow / 模拟工作流** 不用APIKey也能跑。  
+   - 粘贴一段文字 → 配好Key后 **Generate Paper Card / 生成论文卡片** 能出结果。  
 
-### 方案 B — Vercel CLI
+### 方案B — Vercel CLI
 
 ```bash
 cd research-brief-builder
@@ -138,31 +138,31 @@ vercel --prod
 
 ### 安全说明
 
-- 切勿将 `.env.local` 或密钥提交到 git（`.gitignore` 已排除 `.env*`）。  
-- `OPENAI_API_KEY` **仅服务端**（Route Handlers）；不暴露给浏览器。  
-- 若在日志或录屏中泄露，请轮换密钥。  
+- 别把 `.env.local` 或密钥提交进git（`.gitignore` 已忽略 `.env*`）。  
+- `OPENAI_API_KEY` **只在服务端**（Route Handlers），浏览器拿不到。  
+- 日志或录屏里漏了Key，就去OpenAI后台轮换。  
 
 ### 构建设置（默认）
 
-- Build command / 构建命令：`npm run build`  
-- Output / 输出：Next.js 默认  
-- Node：20.x（Vercel 默认即可）  
+- 构建命令：`npm run build`  
+- 输出：Next.js默认  
+- Node：20.x（用Vercel默认就行）  
 
-### 故障排查
+### 常见问题
 
-| Issue / 问题 | Fix / 修复 |
-|--------------|------------|
-| Generate 时 503 CONFIG_ERROR | 在 Vercel → Settings → Environment Variables 添加 `OPENAI_API_KEY` → 重新部署 |
-| 部署后 PDF 提取失败 | PDF.js worker 从 unpkg CDN 加载；检查网络/广告拦截 |
-| 本地构建失败 | 先运行 `npm run build` 并修复 TypeScript 错误 |
+| 现象 | 处理 |
+|------|------|
+| 点Generate报503 CONFIG_ERROR | Vercel → Settings → Environment Variables 补上 `OPENAI_API_KEY` → 重新部署 |
+| 线上PDF抽文本失败 | PDF.js worker走unpkg CDN；查网络或广告拦截 |
+| 本地 `npm run build` 挂 | 先本地修完TypeScript再部署 |
 
 ### 自定义域名（可选）
 
-Vercel project → Settings → Domains → 添加如 `brief.yourdomain.com`。
+Vercel project → Settings → Domains → 加比如 `brief.yourdomain.com`。
 
-### 作品集 README 片段
+### 作品集README片段
 
-部署后，添加至作品集 / GitHub README：
+部署完可以贴到作品集或GitHub README：
 
 ```markdown
 **Live demo:** https://your-app.vercel.app
@@ -170,4 +170,4 @@ Vercel project → Settings → Domains → 添加如 `brief.yourdomain.com`。
 30s walkthrough: Simulate workflow → tabs → Export Markdown (no API key required for demo).
 ```
 
-录制后添加 `docs/assets/demo.gif`（见 `DEMO_RECORDING.md`）。
+录完演示再补 `docs/assets/demo.gif`（见 `DEMO_RECORDING.md`）。

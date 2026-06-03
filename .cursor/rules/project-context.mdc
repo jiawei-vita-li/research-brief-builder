@@ -5,88 +5,66 @@ alwaysApply: true
 
 # Research Brief Builder Rules
 
-> **Language / 语言:** Each major section has **English** then **中文** (or inline `EN / 中文` for short items).
+> **Language / 语言:** Each major section has **English** then **中文** (or inline `EN / 中文` for short items). **中文排版（zhNormalize）：** 保留的英文与数字前后不加空格（如：导出Markdown、至少80字、Phase1–6）。
 
 ---
 
 ## English
 
-This project is an AI-native workflow app for paper reading and RA outreach.
+This project is an AI-native workflow app for paper reading and RA outreach / 论文阅读与RA套磁的分步工作流应用。
 
 Always follow these principles:
 
-1. This is not a chatbot.
-   Build visible workflow steps and structured editable outputs.
+1. This is not a chatbot / 不是聊天机器人。
+   Build visible workflow steps and structured editable outputs / 步骤看得见，输出结构化且可改。
 
-2. Prioritize MVP clarity over feature breadth.
-   Do not add scraping, authentication, payment, or complex backend unless explicitly requested.
+2. Prioritize MVP clarity over feature breadth / MVP讲清楚比堆功能重要。
+   Do not add scraping, authentication, payment, or complex backend unless explicitly requested / 除非用户明确要求，别加爬取、登录、支付或重后端。
 
 3. Use Next.js App Router, TypeScript, and Tailwind.
 
-4. Keep components small and readable.
+4. Keep components small and readable / 组件保持小而好读。
 
-5. Use explicit TypeScript types or schemas for all AI outputs.
+5. Use explicit TypeScript types or schemas for all AI outputs / 所有AI输出都要有类型或schema。
 
-6. All generated content should be editable by the user.
+6. All generated content should be editable by the user / 生成内容用户都能改。
 
-7. Always include empty, loading, and error states for AI workflow steps.
+7. Always include empty, loading, and error states for AI workflow steps / 每步都要有empty、loading、error。
 
-8. Do not hallucinate paper metadata.
-   If metadata is missing, use "unknown".
+8. Do not hallucinate paper metadata / 别编论文元数据。
+   If metadata is missing, use `"unknown"`.
 
-9. Before coding, check:
+9. Before coding, check / 写代码前先读：
    - docs/USER_CONTEXT.md
    - docs/PRODUCT_BRIEF.md
-   - docs/MVP_SPEC.md (Phases 1–6 implemented)
+   - docs/MVP_SPEC.md (Phases 1–6 implemented / Phase1–6已实现)
    - docs/DEPLOYMENT.md
 
-10. LLM steps are user-triggered only (never auto-run after PDF upload).
-    Export is client-side Markdown; do not add email sending.
+10. LLM steps are user-triggered only (never auto-run after PDF upload) / LLM只能用户点按钮触发，上传PDF后不自动跑。
+    Export is client-side Markdown; do not add email sending / 导出用客户端Markdown，不做发信。
 
-11. After each implementation task, summarize:
-   - files changed,
-   - what works,
-   - what remains,
-   - any tradeoffs.
+11. After each implementation task, summarize / 每次改完简要说明：
+   - files changed / 动了哪些文件，
+   - what works / 现在能用啥，
+   - what remains / 还差啥，
+   - any tradeoffs / 有啥取舍。
 
 ---
 
 ## 中文
 
-本项目是面向论文阅读与 RA 外联的 AI 原生工作流应用。
+这是给**论文阅读 + RA套磁**用的分步工作流，不是聊天套壳。
 
-始终遵循以下原则：
+写代码时守这些线：
 
-1. 这不是聊天机器人。
-   构建可见的工作流步骤与结构化、可编辑的输出。
-
-2. MVP 清晰度优先于功能广度。
-   除非明确要求，勿添加爬取、认证、支付或复杂后端。
-
-3. 使用 Next.js App Router、TypeScript 与 Tailwind。
-
-4. 保持组件小而可读。
-
-5. 所有 AI 输出使用显式 TypeScript 类型或 schema。
-
-6. 所有生成内容应可由用户编辑。
-
-7. AI 工作流步骤须始终包含 empty / loading / error 状态。
-
-8. 勿幻觉论文元数据。
-   元数据缺失时使用 `"unknown"`。
-
-9. 编码前查阅：
-   - docs/USER_CONTEXT.md
-   - docs/PRODUCT_BRIEF.md
-   - docs/MVP_SPEC.md（阶段 1–6 已实现）
-   - docs/DEPLOYMENT.md
-
-10. LLM 步骤仅由用户触发（PDF 上传后永不自动运行）。
-    导出为客户端 Markdown；勿添加邮件发送功能。
-
-11. 每次实现任务后，总结：
-   - 变更文件，
-   - 已可用功能，
-   - 剩余工作，
-   - 任何权衡。
+1. **不是聊天机器人** — 步骤条 + 结构化、能改的块。
+2. **MVP先讲清楚** — 用户没说要，就别上爬取、登录、支付、复杂后端。
+3. 技术栈：Next.js App Router、TypeScript、Tailwind。
+4. 组件小而好读。
+5. AI输出必须有TypeScript类型或schema，别裸JSON糊界面。
+6. 模型写出来的东西，用户要能当场改。
+7. 每个AI步骤都要有empty / loading / error。
+8. 论文元数据缺了就标 `"unknown"`，别瞎填。
+9. 动手前扫一眼：`docs/USER_CONTEXT.md`、`docs/PRODUCT_BRIEF.md`、`docs/MVP_SPEC.md`（Phase1–6已落地）、`docs/DEPLOYMENT.md`。
+10. LLM**只能**用户点按钮；上传PDF只填粘贴区，不自动调模型。导出Markdown在浏览器完成，**不做**发邮件。
+11. 每次任务结束写四句：改了啥文件、现在能用啥、还差啥、有啥取舍。
