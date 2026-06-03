@@ -1,5 +1,7 @@
 # Research Brief Builder
 
+**Repository / 仓库:** https://github.com/jiawei-vita-li/research-brief-builder
+
 > **Language / 语言:** Each major section has **English** then **中文** (or inline `EN / 中文` for short items).
 
 ---
