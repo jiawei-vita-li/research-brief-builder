@@ -1,131 +1,166 @@
 # Research Brief Builder
 
-**Repository / 仓库:** https://github.com/jiawei-vita-li/research-brief-builder
+**AI workflow for RA outreach — staged artifacts, quote grounding, not a chatbot.**
 
-> **Language / 语言:** Each major section has **English** then **中文** (or inline `EN / 中文` for short items). **中文排版（zhNormalize）：** 保留的英文与数字前后不加空格（如：导出Markdown、至少80字、Phase1–6）。
+| | |
+|---|---|
+| **Live demo** | [5-min Vercel setup](docs/VERCEL_ONE_CLICK.md) → paste URL below (Simulate works without API key) |
+| **Try in 30s** | **Simulate workflow** → skim tabs → **Export Markdown** (no API key) |
+| **For interviewers** | [docs/INTERVIEW.md](docs/INTERVIEW.md) · [Product brief](docs/PRODUCT_BRIEF.md) |
+| **Repo** | https://github.com/jiawei-vita-li/research-brief-builder |
+
+```text
+Live demo: https://research-brief-builder.vercel.app
+```
+↑ Replace after Vercel deploy (Dashboard import → env vars → redeploy). **Simulate** works without a key.
 
 ---
 
-## English
+## Demo
 
-AI-native workflow for graduate RA outreach: structured paper cards, research map, fit analysis, and outreach email drafts — with source grounding and Markdown export.
+| Step | Screenshot |
+|------|------------|
+| Simulate + stepper | ![Simulate workflow](docs/assets/01-simulate.png) |
+| Paper card + grounding | ![Paper Cards](docs/assets/02-paper-card.png) |
+| Research map | ![Research Map](docs/assets/03-research-map.png) |
+| Export | ![Export Markdown](docs/assets/04-export.png) |
 
-**Docs:** [Product brief](docs/PRODUCT_BRIEF.md) · [MVP spec](docs/MVP_SPEC.md) · [Deploy to Vercel](docs/DEPLOYMENT.md) · [Record demo GIF](docs/DEMO_RECORDING.md)
+<!-- Optional GIF: ![Demo](docs/assets/demo.gif) -->
 
-### UI copy convention
+If images are missing, run `npm run dev` → http://localhost:3000 → **Simulate workflow** (see [docs/assets/README.md](docs/assets/README.md)).
 
-In-app labels use **`English / 中文`**, centralized in [`lib/i18n/strings.ts`](lib/i18n/strings.ts) with [`zhNormalize`](lib/i18n/bi.ts) (no spaces around Latin letters/digits in Chinese). Documentation follows the same bilingual style; code blocks, env vars, and API routes stay unchanged.
+---
 
-### Demo
+## Architecture
 
-<!-- After recording, uncomment and add docs/assets/demo.gif -->
-<!-- ![Simulate workflow → Export Markdown](docs/assets/demo.gif) -->
-
-**Quick demo (no API key):** **Simulate workflow** → skim tabs → **Export Markdown** or **Copy to clipboard**.
-
-### Live deploy (Vercel)
-
-1. See **[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)** for step-by-step setup.
-2. Set `OPENAI_API_KEY` (and optional `OPENAI_MODEL`) in Vercel → Environment Variables.
-3. Redeploy after adding secrets.
-
-```text
-Live demo: https://YOUR_PROJECT.vercel.app   ← replace after deploy
+```mermaid
+flowchart LR
+  subgraph Browser
+    PDF[PDF extract]
+    UI[Editable artifacts]
+    Ground[Quote grounding]
+    Export[Markdown export]
+  end
+  subgraph Server
+    API["/api/paper-card"]
+    Map["/api/research-map"]
+    Fit["/api/fit-email"]
+  end
+  PDF --> UI
+  UI --> API
+  UI --> Map
+  UI --> Fit
+  Ground --> UI
+  UI --> Export
 ```
 
-### Run locally
+No database · no email send · PDF never uploaded to server.
 
-```bash
-cd research-brief-builder
-npm install
-cp .env.example .env.local
-# Edit .env.local: OPENAI_API_KEY=sk-...
-npm run dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000).
-
-### MVP features (Phases 1–6)
+## MVP (Phases 1–6)
 
 | Phase | Feature |
 |-------|---------|
-| 1 | Mock UI + **Simulate workflow** |
-| 2 | **Generate Paper Card** (paste text + LLM) |
-| 2.5 | User background + **source grounding** on quotes |
-| 3 | **PDF upload** → client text extract (review before LLM) |
+| 1 | **Simulate workflow** (mock, no API key) |
+| 2 | **Generate Paper Card** (paste + LLM) |
+| 2.5 | User background + **source grounding** |
+| 3 | **PDF upload** → client extract, review first |
 | 4 | **Synthesize Research Map** |
 | 5 | **Generate Fit & Email** |
 | 6 | **Export Markdown** + **Copy to clipboard** |
 
-### Scripts
-
-- `npm run dev` — development server
-- `npm run build` — production build
-- `npm run lint` — ESLint
-
-### Interview pitch (one sentence)
-
-*Structured, verifiable RA outreach workflow with visible steps and human-in-the-loop artifacts—not a generic paper summarizer or chat wrapper.*
+**Real LLM path:** paste ≥100 chars → generate card → synthesize map → background ≥80 chars → fit & email.
 
 ---
 
-## 中文
+## Run locally
 
-帮研究生做RA套磁的一套AI工作流：论文卡片、研究地图、匹配分析、邮件草稿都按结构来，引文能对照原文核对，最后可导出Markdown。
-
-**文档：** [产品简介](docs/PRODUCT_BRIEF.md) · [MVP规格](docs/MVP_SPEC.md) · [部署到Vercel](docs/DEPLOYMENT.md) · [录制演示GIF](docs/DEMO_RECORDING.md)
-
-### 界面文案约定
-
-应用里标签和提示统一用 **`English / 中文`**，文案集中在 [`lib/i18n/strings.ts`](lib/i18n/strings.ts)，中文里的英文和数字前后不留空格（见 [`zhNormalize`](lib/i18n/bi.ts)）。文档同样双语；代码块、环境变量名、API路由不改。
-
-### 演示
-
-<!-- 录制完成后，取消注释并添加 docs/assets/demo.gif -->
-<!-- ![Simulate workflow → Export Markdown](docs/assets/demo.gif) -->
-
-**快速演示（不用APIKey）：** **Simulate workflow / 模拟工作流** → 点一圈各标签页 → **Export Markdown / 导出Markdown** 或 **Copy to clipboard / 复制到剪贴板**。
-
-### 线上部署（Vercel）
-
-1. 一步步怎么做，看 **[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)**。
-2. 在Vercel → Environment Variables里填 `OPENAI_API_KEY`（可选 `OPENAI_MODEL`）。
-3. 密钥加好后重新部署一次。
-
-```text
-Live demo: https://YOUR_PROJECT.vercel.app   ← 部署后替换
+```bash
+git clone https://github.com/jiawei-vita-li/research-brief-builder.git
+cd research-brief-builder
+npm install
+cp .env.example .env.local
+# Optional for LLM steps: OPENAI_API_KEY=sk-...
+npm run dev
 ```
+
+Open http://localhost:3000
+
+---
+
+## Docs
+
+| Doc | Purpose |
+|-----|---------|
+| [INTERVIEW.md](docs/INTERVIEW.md) | 30s script, decisions, tradeoffs |
+| [PRODUCT_BRIEF.md](docs/PRODUCT_BRIEF.md) | Positioning & differentiation |
+| [MVP_SPEC.md](docs/MVP_SPEC.md) | Schemas, APIs, phases |
+| [DEPLOYMENT.md](docs/DEPLOYMENT.md) | Vercel + env vars |
+| [DEMO_RECORDING.md](docs/DEMO_RECORDING.md) | GIF storyboard |
+
+UI copy: `English / 中文` in [`lib/i18n/strings.ts`](lib/i18n/strings.ts) ([`zhNormalize`](lib/i18n/bi.ts): no spaces around English/digits in 中文).
+
+---
+
+## Scripts
+
+- `npm run dev` — development
+- `npm run build` — production build
+- `npm run lint` — ESLint
+
+---
+
+## Interview pitch
+
+*Structured, verifiable RA outreach with visible steps and editable artifacts—not a generic summarizer or chat wrapper.*
+
+---
+
+## 中文（简要）
+
+帮研究生做RA套磁的分步AI工作流：论文卡片、研究地图、契合度、邮件草稿均可编辑；引文对照原文；可导出Markdown。
+
+| | |
+|---|---|
+| **线上演示** | 见 [DEPLOYMENT.md](docs/DEPLOYMENT.md)，部署后替换上方Live demo链接 |
+| **30秒体验** | **模拟全流程** → 浏览各页 → **导出Markdown**（无需APIKey） |
+| **面试官** | [INTERVIEW.md](docs/INTERVIEW.md) |
+
+**面试一句话：** *按步骤产出、能核对引文、能改能导出，不是聊天套壳。*
+
+<details>
+<summary>完整中文说明（展开）</summary>
 
 ### 本地运行
 
 ```bash
+git clone https://github.com/jiawei-vita-li/research-brief-builder.git
 cd research-brief-builder
 npm install
 cp .env.example .env.local
-# 编辑 .env.local: OPENAI_API_KEY=sk-...
+# 可选：OPENAI_API_KEY=sk-...
 npm run dev
 ```
-
-打开 [http://localhost:3000](http://localhost:3000)。
 
 ### MVP功能（Phase1–6）
 
 | 阶段 | 功能 |
 |------|------|
-| 1 | 模拟UI + **Simulate workflow / 模拟工作流** |
-| 2 | **Generate Paper Card / 生成论文卡片**（粘贴文本 + LLM） |
-| 2.5 | 用户背景 + 引文 **source grounding / 对照原文** |
-| 3 | **PDF upload / PDF上传** → 客户端抽文本（调LLM前先自己过一遍） |
-| 4 | **Synthesize Research Map / 合成研究地图** |
-| 5 | **Generate Fit & Email / 生成匹配与邮件** |
-| 6 | **Export Markdown / 导出Markdown** + **Copy to clipboard / 复制到剪贴板** |
+| 1 | 模拟全流程（无需APIKey） |
+| 2 | 生成论文卡片 |
+| 2.5 | 个人背景 + 引文对照原文 |
+| 3 | PDF上传，客户端抽文本 |
+| 4 | 合成研究地图 |
+| 5 | 生成契合度与邮件 |
+| 6 | 导出Markdown + 复制 |
 
-### 脚本
+文档：[产品简介](docs/PRODUCT_BRIEF.md) · [MVP规格](docs/MVP_SPEC.md) · [部署](docs/DEPLOYMENT.md)
 
-- `npm run dev` — 开发服务器
-- `npm run build` — 生产构建
-- `npm run lint` — ESLint
+</details>
 
-### 面试一句话pitch
+---
 
-*RA套磁按步骤走、中间结果能改能核对，不是「一键摘要」，也不是把ChatGPT包一层壳。*
+## License
+
+[MIT](LICENSE)
